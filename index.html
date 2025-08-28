@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinellas Trail Challenge - Aid Stations</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        #map { position: absolute; top: 0; bottom: 0; right: 0; left: 350px; }
+        #sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 350px;
+            height: 100vh;
+            background: white;
+            border-right: 2px solid #e5e7eb;
+            overflow-y: auto;
+            z-index: 1;
+        }
+        .sidebar-header {
+            padding: 20px;
+            background: #f8fafc;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        .race-logo {
+            width: 120px;
+            height: auto;
+            margin: 0 auto 15px auto;
+            display: block;
+            border-radius: 8px;
+        }
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+        .sidebar-subtitle {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+        .download-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            color: #374151;
+            transition: all 0.2s;
+        }
+        .download-link:hover {
+            background: #e5e7eb;
+            border-color: #9ca3af;
+            color: #1f2937;
+        }
+        .download-link svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+        .aid-station {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f3f4f6;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .aid-station:hover {
+            background-color: #f9fafb;
+        }
+        .aid-station.start {
+            border-left: 4px solid #22c55e;
+        }
+        .aid-station.finish {
+            border-left: 4px solid #ef4444;
+        }
+        .aid-station.aid-station-item {
+            border-left: 4px solid #f59e0b;
+        }
+        .aid-station.waypoint {
+            border-left: 4px solid #3887be;
+        }
+        .mile-marker {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+        .description {
+            font-size: 14px;
+            color: #4b5563;
+            margin-bottom: 6px;
+        }
+        .details {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 500;
+            margin-right: 4px;
+            margin-top: 4px;
+        }
+        .badge.aid { background: #fef3c7; color: #92400e; }
+        .badge.drop-bags { background: #ddd6fe; color: #7c3aed; }
+        .badge.gels { background: #fecaca; color: #dc2626; }
+        .mapboxgl-popup-content {
+            max-width: 300px;
+        }
+        .popup-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .popup-details {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .style-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .style-toggle button {
+            background: white;
+            border: none;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #374151;
+        }
+        .style-toggle button:hover {
+            background: #f3f4f6;
+        }
+        .style-toggle button.active {
+            background: #3887be;
+            color: white;
+        }
+        .style-toggle button:not(:last-child) {
+            border-right: 1px solid #e5e7eb;
+        }
+        @media (max-width: 768px) {
+            #sidebar {
+                width: 300px;
+            }
+            #map {
+                left: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id='sidebar'>
+        <div class='sidebar-header'>
+            <img src='ptc.jpg' alt='Pinellas Trail Challenge Logo' class='race-logo'>
+            <div class='sidebar-title'>Aid Stations & Waypoints</div>
+            <div class='sidebar-subtitle'>Interactive Course Map</div>
+            <div class='download-links'>
+                <a href='ptc.gpx' download='pinellas-trail-challenge-route.gpx' class='download-link'>
+                    <svg viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                    GPX Route
+                </a>
+                <a href='ptc-aid-locations.csv' download='pinellas-trail-challenge-aid-stations.csv' class='download-link'>
+                    <svg viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                    Aid Stations CSV
+                </a>
+            </div>
+        </div>
+        <div id='aid-stations-list'></div>
+    </div>
+    <div id='map'></div>
+    <div class='style-toggle'>
+        <button id='outdoors-btn' class='active'>Outdoors</button>
+        <button id='standard-btn'>Standard</button>
+        <button id='satellite-btn'>Satellite</button>
+    </div>
+    
+    <script>
+        async function loadEnv() {
+            try {
+                const response = await fetch('.env');
+                const text = await response.text();
+                const lines = text.split('\n');
+                const env = {};
+                
+                lines.forEach(line => {
+                    const [key, value] = line.split('=');
+                    if (key && value) {
+                        env[key.trim()] = value.trim();
+                    }
+                });
+                
+                return env;
+            } catch (error) {
+                console.error('Could not load .env file:', error);
+                return {};
+            }
+        }
+        
+        async function loadGPX() {
+            try {
+                const response = await fetch('ptc.gpx');
+                const gpxText = await response.text();
+                const parser = new DOMParser();
+                const gpxDoc = parser.parseFromString(gpxText, 'application/xml');
+                
+                const trackPoints = gpxDoc.querySelectorAll('trkpt');
+                const coordinates = [];
+                
+                trackPoints.forEach(point => {
+                    const lat = parseFloat(point.getAttribute('lat'));
+                    const lon = parseFloat(point.getAttribute('lon'));
+                    if (!isNaN(lat) && !isNaN(lon)) {
+                        coordinates.push([lon, lat]);
+                    }
+                });
+                
+                return coordinates;
+            } catch (error) {
+                console.error('Could not load GPX file:', error);
+                return [];
+            }
+        }
+        
+        async function initMap() {
+            const env = await loadEnv();
+            mapboxgl.accessToken = env.MAPBOX_ACCESS_TOKEN || 'YOUR_MAPBOX_ACCESS_TOKEN';
+            
+            const map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/outdoors-v12',
+                center: [-82.73, 28.05],
+                zoom: 10
+            });
+            
+            return map;
+        }
+        
+        initMap().then(async map => {
+            const gpxCoordinates = await loadGPX();
+            
+            const csvData = `Mile,Description,Aid Station,Drop Bags,HUMA Gels,Lat,Lon,Approximate Address,Aid Station Cutoff,12m Pace Time
+0,START,Y,,,27.77023094,-82.63248471,"100 1st Ave SE, St. Petersburg, FL 33701",,6:30:00 AM
+2,"No aid - busy intersection, cross with caution!",,,,27.76655719,-82.66304246,,,6:54:00 AM
+3.1,Trail Access off dead end of 35th St.,,,,27.76273001,-82.68060661,"698 35th St S, St. Petersburg, FL 33711",,7:07:12 AM
+4,Trailhead access w/ parking,,,,27.76269015,-82.69461775,"680 45th St S, St. Petersburg, FL 33711",,7:18:00 AM
+5.5,Trail Access off dead end road next to Egret Cove Center,,,,27.76509207,-82.72022887,"550 62nd St S, St. Petersburg, Fl 33707",,7:36:00 AM
+8,"AS 1 - St. Pete Running Company - no direct access, park in shared store lot",Y,,,27.79071312,-82.7342793,"7044 22nd Ave N, St. Petersburg, FL 33710",9:00 AM,8:06:00 AM
+8.5,Parking lot with trail access behind Cobb Tyrone Theater,,,,27.79679543,-82.73709067,"2998 Tyrone Blvd N, St. Petersburg, FL 33710",,8:12:00 AM
+11,Near KOA Camp,,,,27.82053496,-82.77118296,"8380 95th St N, St Petersburg, FL 33708",,8:42:00 AM
+12,"No easy aid - runner bathroom access, Blossom Lake Park",,,,27.82920969,-82.7829533,,,8:54:00 AM
+13.5,AS 2 - Clever Training @ Seminole City Park,Y,Y,,27.83980277,-82.80182271,Seminole City Park Parking Lot,10:30 AM,9:12:00 AM
+14,"Neighborhood road along 118th St, parking along side of the road",,,,27.84475271,-82.80363583,"7881 118th St. N, Seminole, FL 33772",,9:18:00 AM
+15.75,Trail Access off dead end of 110th Ave.,,,,27.87288472,-82.79939438,"11698 110th Ave N, Largo, FL 33772",,9:39:00 AM
+18.9,AS 3 - F45 Training Largo East - Trail access behind McDonalds Parking Lot,Y,,Y,27.91762438,-82.80066202,"1250 W Bay Dr, Largo, FL 33770",11:55 AM,10:16:48 AM
+21,A Street crosses over trail,,,,27.94989082,-82.79797329,"602 A St, Clearwater, FL 33756",,10:42:00 AM
+22,AS 4 - Pinellas Trail Buddies - Trail in front of public Trail access parking lot,Y,,,27.95962954,-82.79686441,"700 Turner St, Clearwater, FL 33756",12:45 AM,10:54:00 AM
+22.5,"No aid - Hard Left then hard right turn, follow Pinellas Trail signs!",,,,27.96822066,-82.7969975,,,11:00:00 AM
+24,Limited parking - trail access off dead end of Cardova Ln,,,,27.98926955,-82.79102293,"1199 Cardova Ln, Clearwater, FL  33755",,11:18:00 AM
+25,Trail access off dead end of Florida Ave,,,,28.00300208,-82.78870886,"399 Florida Ave, Dunedin, FL 34698",,11:30:00 AM
+25.5,AS 5 - Vinny Vercamen - Boxcar in Downtown Dunedin,Y,Y,Y,28.01153133,-82.78870302,"349 A Main St, Dunedin, FL 34698",1:55 PM,11:36:00 AM
+26.2,Weaver Park,,,,28.01991229,-82.78877607,"1258 Bayshore Blvd, Dunedin, FL 34698",,11:44:24 AM
+27.3,Trail Access Beside Hammock Park,,,,28.03474046,-82.78536658,"1946 Douglas Ave, Dunedin, FL 34698",,11:57:36 AM
+29,Prior Marina - Park along trail side grass across from the marina,,,,28.05725619,-82.7759261,"121 Orange St, Palm Harbor, FL 34683",,12:18:00 PM
+30.1,AS 6/10 - RFB and DCR Groups - Georgia ave past the Stilt House,Y,,,28.07220026,-82.7696783,"821 Virginia Ave, Palm Harbor, FL 34683",,12:31:12 PM
+31.8,Limited parking - trail access off dead end of Pennsylvania Ave,,,,28.09028107,-82.77673663,"385 Pennsylvania Ave, Palm Harbor, FL 34683",,12:51:36 PM
+32,Grass parking anywhere along trail side of Henry Lane,,,,28.09266416,-82.77785315,"Henry Ln, Crystal Beach, FL 34681",,12:54:00 PM
+33,AS 7/9 - LOUD Runnners - Wall Springs Park,Y,,,28.1061151,-82.77102882,"3725 Desoto Blvd, Palm Harbor, FL 34683",,1:06:00 PM
+36,AS 8 - Brighter Days Run Club - TURNAROUND,Y,Y,,28.14903659,-82.7546232,"311 N Safford Ave, Tarpon Springs, FL 34689",5:00 PM,1:42:00 PM
+39,AS 7/9 - LOUD Runnners - Wall Springs Park,Y,,,28.1061151,-82.77102882,"3725 Desoto Blvd, Palm Harbor, FL 34683",5:50 PM,2:18:00 PM
+40,Grass parking anywhere along trail side of Henry Lane,,,,28.09266416,-82.77785315,"Henry Ln, Crystal Beach, FL 34681",,2:30:00 PM
+40.2,Limited parking - trail access off dead end of Pennsylvania Ave,,,,28.09028107,-82.77673663,"385 Pennsylvania Ave, Palm Harbor, FL 34683",,2:32:24 PM
+41.9,AS 6/10 - RFB and DCR Groups - Georgia ave past the Stilt House,Y,,,28.07220026,-82.7696783,"821 Virginia Ave, Palm Harbor, FL 34683",6:30 PM,2:52:48 PM
+43,Prior Marina - Park along trail side grass across from the marina,,,,28.05725619,-82.7759261,"121 Orange St, Palm Harbor, FL 34683",,3:06:00 PM
+44.7,Trail Access Beside Hammock Park,,,,28.03474046,-82.78536658,"1946 Douglas Ave, Dunedin, FL 34698",,3:26:24 PM
+46,FINISH!! - Weaver Park - Dunedin Women Runners & Florida Trail Runners Podcast,Y,,,28.01991229,-82.78877607,"1258 Bayshore Blvd, Dunedin, FL 34698",7:30 PM,3:42:00 PM`;
+        
+        function parseCSV(csv) {
+            const lines = csv.trim().split('\n');
+            const headers = lines[0].split(',');
+            const data = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = [];
+                let current = '';
+                let inQuotes = false;
+                
+                for (let j = 0; j < lines[i].length; j++) {
+                    const char = lines[i][j];
+                    if (char === '"' && (j === 0 || lines[i][j-1] === ',')) {
+                        inQuotes = true;
+                    } else if (char === '"' && inQuotes && (j === lines[i].length - 1 || lines[i][j+1] === ',')) {
+                        inQuotes = false;
+                    } else if (char === ',' && !inQuotes) {
+                        values.push(current);
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                values.push(current);
+                
+                const row = {};
+                headers.forEach((header, index) => {
+                    row[header] = values[index] || '';
+                });
+                data.push(row);
+            }
+            
+            return data;
+        }
+        
+        function populateSidebar(locations) {
+            const sidebarList = document.getElementById('aid-stations-list');
+            sidebarList.innerHTML = '';
+            
+            locations.forEach(function(location, index) {
+                if (location.Lat && location.Lon) {
+                    const lat = parseFloat(location.Lat);
+                    const lon = parseFloat(location.Lon);
+                    
+                    if (!isNaN(lat) && !isNaN(lon)) {
+                        const isAidStation = location['Aid Station'] === 'Y';
+                        const isStart = location.Mile === '0';
+                        const isFinish = location.Description.includes('FINISH');
+                        
+                        let stationType = 'waypoint';
+                        if (isStart) stationType = 'start';
+                        else if (isFinish) stationType = 'finish';
+                        else if (isAidStation) stationType = 'aid-station-item';
+                        
+                        const aidStationElement = document.createElement('div');
+                        aidStationElement.className = `aid-station ${stationType}`;
+                        aidStationElement.setAttribute('data-lat', lat);
+                        aidStationElement.setAttribute('data-lon', lon);
+                        
+                        let badgesHtml = '';
+                        if (location['Aid Station'] === 'Y') badgesHtml += '<span class="badge aid">Aid Station</span>';
+                        if (location['Drop Bags'] === 'Y') badgesHtml += '<span class="badge drop-bags">Drop Bags</span>';
+                        if (location['HUMA Gels'] === 'Y') badgesHtml += '<span class="badge gels">HUMA Gels</span>';
+                        
+                        let timeInfo = '';
+                        if (location['12m Pace Time']) {
+                            timeInfo = `<div class="details">12min pace: ${location['12m Pace Time']}</div>`;
+                        }
+                        if (location['Aid Station Cutoff']) {
+                            timeInfo += `<div class="details">Cutoff: ${location['Aid Station Cutoff']}</div>`;
+                        }
+                        
+                        aidStationElement.innerHTML = `
+                            <div class="mile-marker">Mile ${location.Mile}</div>
+                            <div class="description">${location.Description}</div>
+                            ${badgesHtml}
+                            ${timeInfo}
+                        `;
+                        
+                        aidStationElement.addEventListener('click', function() {
+                            map.flyTo({
+                                center: [lon, lat],
+                                zoom: 15,
+                                duration: 1000
+                            });
+                        });
+                        
+                        sidebarList.appendChild(aidStationElement);
+                    }
+                }
+            });
+        }
+            
+            map.on('load', function() {
+                if (gpxCoordinates.length > 0) {
+                    map.addSource('route', {
+                        'type': 'geojson',
+                        'data': {
+                            'type': 'Feature',
+                            'properties': {},
+                            'geometry': {
+                                'type': 'LineString',
+                                'coordinates': gpxCoordinates
+                            }
+                        }
+                    });
+                    
+                    map.addLayer({
+                        'id': 'route',
+                        'type': 'line',
+                        'source': 'route',
+                        'layout': {
+                            'line-join': 'round',
+                            'line-cap': 'round'
+                        },
+                        'paint': {
+                            'line-color': '#3887be',
+                            'line-width': 4,
+                            'line-opacity': 0.8
+                        }
+                    });
+                }
+                
+                const locations = parseCSV(csvData);
+                
+                // Calculate bounds from all waypoints
+                const bounds = new mapboxgl.LngLatBounds();
+                locations.forEach(function(location) {
+                    if (location.Lat && location.Lon) {
+                        const lat = parseFloat(location.Lat);
+                        const lon = parseFloat(location.Lon);
+                        if (!isNaN(lat) && !isNaN(lon)) {
+                            bounds.extend([lon, lat]);
+                        }
+                    }
+                });
+                
+                // Fit map to bounds with some padding
+                map.fitBounds(bounds, {
+                    padding: { top: 50, bottom: 50, left: 50, right: 50 },
+                    maxZoom: 12
+                });
+                
+                // Populate sidebar
+                populateSidebar(locations);
+                
+                locations.forEach(function(location, index) {
+                if (location.Lat && location.Lon) {
+                    const lat = parseFloat(location.Lat);
+                    const lon = parseFloat(location.Lon);
+                    
+                    if (!isNaN(lat) && !isNaN(lon)) {
+                        const isAidStation = location['Aid Station'] === 'Y';
+                        const isStart = location.Mile === '0';
+                        const isFinish = location.Description.includes('FINISH');
+                        
+                        let markerColor = '#3887be';
+                        if (isStart) markerColor = '#22c55e';
+                        else if (isFinish) markerColor = '#ef4444';
+                        else if (isAidStation) markerColor = '#f59e0b';
+                        
+                        const marker = new mapboxgl.Marker({ color: markerColor })
+                            .setLngLat([lon, lat])
+                            .addTo(map);
+                        
+                        let popupContent = `<div class="popup-title">Mile ${location.Mile}</div>`;
+                        popupContent += `<div class="popup-details">`;
+                        popupContent += `<strong>Description:</strong> ${location.Description}<br>`;
+                        
+                        if (location['Approximate Address']) {
+                            popupContent += `<strong>Address:</strong> ${location['Approximate Address']}<br>`;
+                        }
+                        
+                        if (location['Aid Station'] === 'Y') {
+                            popupContent += `<strong>Aid Station:</strong> Yes<br>`;
+                        }
+                        
+                        if (location['Drop Bags'] === 'Y') {
+                            popupContent += `<strong>Drop Bags:</strong> Yes<br>`;
+                        }
+                        
+                        if (location['HUMA Gels'] === 'Y') {
+                            popupContent += `<strong>HUMA Gels:</strong> Yes<br>`;
+                        }
+                        
+                        if (location['Aid Station Cutoff']) {
+                            popupContent += `<strong>Cutoff Time:</strong> ${location['Aid Station Cutoff']}<br>`;
+                        }
+                        
+                        if (location['12m Pace Time']) {
+                            popupContent += `<strong>12min Pace Arrival:</strong> ${location['12m Pace Time']}<br>`;
+                        }
+                        
+                        popupContent += `</div>`;
+                        
+                        const popup = new mapboxgl.Popup({ offset: 25 })
+                            .setHTML(popupContent);
+                        
+                        marker.setPopup(popup);
+                    }
+                }
+            });
+            });
+            
+            // Style toggle functionality
+            const styleButtons = {
+                'outdoors-btn': 'mapbox://styles/mapbox/outdoors-v12',
+                'standard-btn': 'mapbox://styles/mapbox/standard',
+                'satellite-btn': 'mapbox://styles/mapbox/satellite-v9'
+            };
+            
+            Object.keys(styleButtons).forEach(buttonId => {
+                document.getElementById(buttonId).addEventListener('click', function() {
+                    const styleUrl = styleButtons[buttonId];
+                    map.setStyle(styleUrl);
+                    
+                    // Update active button
+                    document.querySelectorAll('.style-toggle button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+            
+            // Re-add sources and layers after style change
+            map.on('style.load', function() {
+                // Re-add GPX route if it exists
+                if (gpxCoordinates.length > 0) {
+                    if (!map.getSource('route')) {
+                        map.addSource('route', {
+                            'type': 'geojson',
+                            'data': {
+                                'type': 'Feature',
+                                'properties': {},
+                                'geometry': {
+                                    'type': 'LineString',
+                                    'coordinates': gpxCoordinates
+                                }
+                            }
+                        });
+                        
+                        map.addLayer({
+                            'id': 'route',
+                            'type': 'line',
+                            'source': 'route',
+                            'layout': {
+                                'line-join': 'round',
+                                'line-cap': 'round'
+                            },
+                            'paint': {
+                                'line-color': '#3887be',
+                                'line-width': 4,
+                                'line-opacity': 0.8
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
