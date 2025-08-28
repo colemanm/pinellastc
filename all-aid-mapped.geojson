@@ -1,0 +1,707 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "0",
+        "Description": "START",
+        "Approx. Address": "100 1st Ave SE, St. Petersburg, FL 33701",
+        "Lat": "27.77176",
+        "Lon": "-82.634496",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "6:30:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.634496,
+          27.77176
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "2",
+        "Description": "No aid - busy intersection, cross with caution!",
+        "Approx. Address": "",
+        "Lat": "",
+        "Lon": "",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "6:54:00 AM"
+      },
+      "geometry": null
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "3.1",
+        "Description": "Trail Access off dead end of 35th St.",
+        "Approx. Address": "698 35th St S, St. Petersburg, FL 33711",
+        "Lat": "27.763054",
+        "Lon": "-82.680774",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "7:07:12 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.680774,
+          27.763054
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "4",
+        "Description": "Trailhead access w/ parking",
+        "Approx. Address": "680 45th St S, St. Petersburg, FL 33711",
+        "Lat": "27.763483",
+        "Lon": "-82.69417",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "7:18:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.69417,
+          27.763483
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "5.5",
+        "Description": "Trail Access off dead end road next to Egret Cove Center",
+        "Approx. Address": "550 62nd St S, St. Petersburg, Fl 33707",
+        "Lat": "27.765418",
+        "Lon": "-82.719607",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "7:36:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.719607,
+          27.765418
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "8",
+        "Description": "AS 1 - St. Pete Running Company - no direct access, park in shared store lot",
+        "Approx. Address": "7044 22nd Ave N, St. Petersburg, FL 33710",
+        "Lat": "27.79112",
+        "Lon": "-82.7361",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "9:00 AM",
+        "12m Pace Time": "8:06:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.7361,
+          27.79112
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "8.5",
+        "Description": "Parking lot with trail access behind Cobb Tyrone Theater",
+        "Approx. Address": "2998 Tyrone Blvd N, St. Petersburg, FL 33710",
+        "Lat": "27.797871",
+        "Lon": "-82.736568",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "8:12:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.736568,
+          27.797871
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "11",
+        "Description": "Near KOA Camp",
+        "Approx. Address": "8380 95th St N, St Petersburg, FL 33708",
+        "Lat": "27.81803",
+        "Lon": "-82.770994",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "8:42:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.770994,
+          27.81803
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "12",
+        "Description": "No easy aid - runner bathroom access, Blossom Lake Park",
+        "Approx. Address": "",
+        "Lat": "27.82929",
+        "Lon": "-82.78306",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "8:54:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.78306,
+          27.82929
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "13.5",
+        "Description": "AS 2 - Clever Training @ Seminole City Park",
+        "Approx. Address": "Seminole City Park Parking Lot",
+        "Lat": "27.841648",
+        "Lon": "-82.79523",
+        "DROP BAGS": "YES",
+        "HUMA GELS": "",
+        "AS Cutoff": "10:30 AM",
+        "12m Pace Time": "9:12:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.79523,
+          27.841648
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "14",
+        "Description": "Neighborhood road along 118th St, parking along side of the road",
+        "Approx. Address": "7881 118th St. N, Seminole, FL 33772",
+        "Lat": "27.8487",
+        "Lon": "-82.80307",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "9:18:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.80307,
+          27.8487
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "15.75",
+        "Description": "Trail Access off dead end of 110th Ave.",
+        "Approx. Address": "11698 110th Ave N, Largo, FL 33772",
+        "Lat": "27.872855",
+        "Lon": "-82.797093",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "9:39:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.797093,
+          27.872855
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "18.9",
+        "Description": "AS 3 - F45 Training Largo East - Trail access behind McDonalds Parking Lot",
+        "Approx. Address": "1250 W Bay Dr, Largo, FL 33770",
+        "Lat": "27.917175",
+        "Lon": "-82.800195",
+        "DROP BAGS": "",
+        "HUMA GELS": "YES",
+        "AS Cutoff": "11:55 AM",
+        "12m Pace Time": "10:16:48 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.800195,
+          27.917175
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "21",
+        "Description": "A Street crosses over trail",
+        "Approx. Address": "602 A St, Clearwater, FL 33756",
+        "Lat": "27.949872",
+        "Lon": "-82.79784",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "10:42:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.79784,
+          27.949872
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "22",
+        "Description": "AS 4 - Pinellas Trail Buddies - Trail in front of public Trail access parking lot",
+        "Approx. Address": "700 Turner St, Clearwater, FL 33756",
+        "Lat": "27.95989",
+        "Lon": "-82.79664",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "12:45 AM",
+        "12m Pace Time": "10:54:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.79664,
+          27.95989
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "22.5",
+        "Description": "No aid - Hard Left then hard right turn, follow Pinellas Trail signs!!",
+        "Approx. Address": "",
+        "Lat": "",
+        "Lon": "",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "11:00:00 AM"
+      },
+      "geometry": null
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "24",
+        "Description": "Limited parking - trail access off dead end of Cardova Ln",
+        "Approx. Address": "1199 Cardova Ln, Clearwater, FL  33755",
+        "Lat": "27.989328",
+        "Lon": "-82.7913",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "11:18:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.7913,
+          27.989328
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "25",
+        "Description": "Trail access off dead end of Florida Ave",
+        "Approx. Address": "399 Florida Ave, Dunedin, FL 34698",
+        "Lat": "28.003014",
+        "Lon": "-82.789397",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "11:30:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.789397,
+          28.003014
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "25.5",
+        "Description": "AS 5 - Vinny Vercamen - Boxcar in Downtown Dunedin",
+        "Approx. Address": "349 A Main St, Dunedin, FL 34698",
+        "Lat": "28.019492",
+        "Lon": "-82.766194",
+        "DROP BAGS": "YES",
+        "HUMA GELS": "YES",
+        "AS Cutoff": "1:55 PM",
+        "12m Pace Time": "11:36:00 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.766194,
+          28.019492
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "26.2",
+        "Description": "Weaver Park",
+        "Approx. Address": "1258 Bayshore Blvd, Dunedin, FL 34698",
+        "Lat": "28.020627",
+        "Lon": "-82.790045",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "11:44:24 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.790045,
+          28.020627
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "27.3",
+        "Description": "Trail Access Beside Hammock Park",
+        "Approx. Address": "1946 Douglas Ave, Dunedin, FL 34698",
+        "Lat": "27.992368",
+        "Lon": "-82.787843",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "11:57:36 AM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.787843,
+          27.992368
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "29",
+        "Description": "Prior Marina - Park along trail side grass across from the marina",
+        "Approx. Address": "121 Orange St, Palm Harbor, FL 34683",
+        "Lat": "28.058304",
+        "Lon": "-82.77588",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "12:18:00 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.77588,
+          28.058304
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "30.1",
+        "Description": "AS 6/10 - RFB and DCR Groups - Georgia ave past the Stilt House",
+        "Approx. Address": "821 Virginia Ave, Palm Harbor, FL 34683",
+        "Lat": "28.0724",
+        "Lon": "-82.769797",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "12:31:12 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.769797,
+          28.0724
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "31.8",
+        "Description": "Limited parking - trail access off dead end of Pennsylvania Ave",
+        "Approx. Address": "385 Pennsylvania Ave, Palm Harbor, FL 34683",
+        "Lat": "28.09008",
+        "Lon": "-82.77688",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "12:51:36 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.77688,
+          28.09008
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "32",
+        "Description": "Grass parking anywhere along trail side of Henry Lane",
+        "Approx. Address": "Henry Ln, Crystal Beach, FL 34681",
+        "Lat": "28.092424",
+        "Lon": "-82.778019",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "12:54:00 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.778019,
+          28.092424
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "33",
+        "Description": "AS 7/9 - LOUD Runnners - Wall Springs Park",
+        "Approx. Address": "3725 Desoto Blvd, Palm Harbor, FL 34683",
+        "Lat": "28.106782",
+        "Lon": "-82.771647",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "1:06:00 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.771647,
+          28.106782
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "36",
+        "Description": "AS 8 - Brighter Days Run Club - TURNAROUND",
+        "Approx. Address": "311 N Safford Ave, Tarpon Springs, FL 34689",
+        "Lat": "28.148992",
+        "Lon": "-82.754968",
+        "DROP BAGS": "YES",
+        "HUMA GELS": "",
+        "AS Cutoff": "5:00 PM",
+        "12m Pace Time": "1:42:00 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.754968,
+          28.148992
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "39",
+        "Description": "AS 7/9 - LOUD Runnners - Wall Springs Park",
+        "Approx. Address": "3725 Desoto Blvd, Palm Harbor, FL 34683",
+        "Lat": "28.106782",
+        "Lon": "-82.771647",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "5:50 PM",
+        "12m Pace Time": "2:18:00 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.771647,
+          28.106782
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "40",
+        "Description": "Grass parking anywhere along trail side of Henry Lane",
+        "Approx. Address": "Henry Ln, Crystal Beach, FL 34681",
+        "Lat": "28.092424",
+        "Lon": "-82.778019",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "2:30:00 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.778019,
+          28.092424
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "40.2",
+        "Description": "Limited parking - trail access off dead end of Pennsylvania Ave",
+        "Approx. Address": "385 Pennsylvania Ave, Palm Harbor, FL 34683",
+        "Lat": "28.09008",
+        "Lon": "-82.77688",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "2:32:24 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.77688,
+          28.09008
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "41.9",
+        "Description": "AS 6/10 - RFB and DCR Groups - Georgia ave past the Stilt House",
+        "Approx. Address": "821 Virginia Ave, Palm Harbor, FL 34683",
+        "Lat": "28.0724",
+        "Lon": "-82.769797",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "6:30 PM",
+        "12m Pace Time": "2:52:48 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.769797,
+          28.0724
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "43",
+        "Description": "Prior Marina - Park along trail side grass across from the marina",
+        "Approx. Address": "121 Orange St, Palm Harbor, FL 34683",
+        "Lat": "28.058304",
+        "Lon": "-82.77588",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "3:06:00 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.77588,
+          28.058304
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "44.7",
+        "Description": "Trail Access Beside Hammock Park",
+        "Approx. Address": "1946 Douglas Ave, Dunedin, FL 34698",
+        "Lat": "27.992368",
+        "Lon": "-82.787843",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "",
+        "12m Pace Time": "3:26:24 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.787843,
+          27.992368
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Mile": "46",
+        "Description": "FINISH!! - Weaver Park - Dunedin Women Runners & Florida Trail Runners Podcast",
+        "Approx. Address": "1258 Bayshore Blvd, Dunedin, FL 34698",
+        "Lat": "28.020627",
+        "Lon": "-82.790045",
+        "DROP BAGS": "",
+        "HUMA GELS": "",
+        "AS Cutoff": "7:30 PM",
+        "12m Pace Time": "3:42:00 PM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.790045,
+          28.020627
+        ]
+      }
+    }
+  ]
+}
