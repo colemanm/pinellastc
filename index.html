@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pinellas Trail Challenge - Aid Stations</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
     <style>
@@ -165,6 +166,72 @@
         .style-toggle button:not(:last-child) {
             border-right: 1px solid #e5e7eb;
         }
+        .map-legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            font-size: 12px;
+            max-width: 200px;
+        }
+        .legend-title {
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+            gap: 8px;
+        }
+        .legend-item:last-child {
+            margin-bottom: 0;
+        }
+        .legend-dot {
+            display: inline-block !important;
+            width: 16px !important;
+            height: 16px !important;
+            border-radius: 50% !important;
+            flex-shrink: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: 2px solid transparent !important;
+            box-sizing: content-box !important;
+        }
+        .legend-dot.legend-start { 
+            background: #22c55e !important;
+            border-color: #22c55e !important;
+        }
+        .legend-dot.legend-finish { 
+            background: #ef4444 !important;
+            border-color: #ef4444 !important;
+        }
+        .legend-dot.legend-aid { 
+            background: #f59e0b !important;
+            border-color: #f59e0b !important;
+        }
+        .legend-dot.legend-waypoint { 
+            background: #3887be !important;
+            border-color: #3887be !important;
+        }
+        .legend-route {
+            width: 20px;
+            height: 3px;
+            background: #3887be;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .legend-text {
+            color: #374151;
+            font-size: 11px;
+        }
+
         .mobile-toggle {
             display: none;
             position: fixed;
@@ -207,6 +274,19 @@
             .style-toggle {
                 top: 60px;
                 right: 10px;
+            }
+            .map-legend {
+                bottom: 10px;
+                right: 10px;
+                padding: 12px;
+                max-width: 180px;
+            }
+            .legend-title {
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+            .legend-text {
+                font-size: 10px;
             }
             .style-toggle button {
                 padding: 6px 10px;
@@ -287,6 +367,29 @@
                 font-size: 12px;
                 margin-bottom: 4px;
             }
+            .map-legend {
+                bottom: 5px;
+                right: 5px;
+                padding: 10px;
+                max-width: 160px;
+            }
+            .legend-title {
+                font-size: 11px;
+                margin-bottom: 6px;
+            }
+            .legend-text {
+                font-size: 9px;
+            }
+            .legend-dot {
+                width: 20px !important;
+                height: 20px !important;
+                min-width: 20px !important;
+                min-height: 20px !important;
+            }
+            .legend-route {
+                width: 16px;
+                height: 2px;
+            }
         }
     </style>
 </head>
@@ -325,6 +428,29 @@
         <button id='outdoors-btn' class='active'>Outdoors</button>
         <button id='standard-btn'>Standard</button>
         <button id='satellite-btn'>Satellite</button>
+    </div>
+    <div class='map-legend'>
+        <div class='legend-title'>Map Legend</div>
+        <div class='legend-item'>
+            <div class='legend-dot legend-start'></div>
+            <div class='legend-text'>Start (Mile 0)</div>
+        </div>
+        <div class='legend-item'>
+            <div class='legend-dot legend-finish'></div>
+            <div class='legend-text'>Finish (Mile 46)</div>
+        </div>
+        <div class='legend-item'>
+            <div class='legend-dot legend-aid'></div>
+            <div class='legend-text'>Aid Station</div>
+        </div>
+        <div class='legend-item'>
+            <div class='legend-dot legend-waypoint'></div>
+            <div class='legend-text'>Waypoint</div>
+        </div>
+        <div class='legend-item'>
+            <div class='legend-route'></div>
+            <div class='legend-text'>Trail Route</div>
+        </div>
     </div>
     
     <script>
@@ -573,7 +699,14 @@
                 // Populate sidebar
                 populateSidebar(locations);
                 
-                locations.forEach(function(location, index) {
+                // Sort locations by latitude (north to south) for proper marker layering
+                const sortedLocations = [...locations].sort((a, b) => {
+                    const latA = parseFloat(a.Lat);
+                    const latB = parseFloat(b.Lat);
+                    return latB - latA; // Higher latitude (north) drawn first
+                });
+                
+                sortedLocations.forEach(function(location, index) {
                 if (location.Lat && location.Lon) {
                     const lat = parseFloat(location.Lat);
                     const lon = parseFloat(location.Lon);
@@ -588,7 +721,10 @@
                         else if (isFinish) markerColor = '#ef4444';
                         else if (isAidStation) markerColor = '#f59e0b';
                         
-                        const marker = new mapboxgl.Marker({ color: markerColor })
+                        const marker = new mapboxgl.Marker({ 
+                            color: markerColor,
+                            scale: 0.9
+                        })
                             .setLngLat([lon, lat])
                             .addTo(map);
                         
