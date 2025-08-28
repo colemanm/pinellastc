@@ -168,7 +168,7 @@
         }
         .map-legend {
             position: absolute;
-            bottom: 20px;
+            bottom: 120px;
             right: 20px;
             z-index: 1000;
             background: white;
@@ -176,7 +176,33 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             padding: 15px;
             font-size: 12px;
-            max-width: 200px;
+            width: 200px;
+            box-sizing: border-box;
+        }
+        .made-by {
+            position: absolute;
+            bottom: 60px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 8px 12px;
+            width: 200px;
+            box-sizing: border-box;
+        }
+        .made-by a {
+            font-size: 11px;
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .made-by a:hover {
+            color: #374151;
+            text-decoration: underline;
+        }
+        .made-by a[href*="facebook"]:hover {
+            text-decoration: underline;
         }
         .legend-title {
             font-weight: bold;
@@ -276,10 +302,19 @@
                 right: 10px;
             }
             .map-legend {
-                bottom: 10px;
+                bottom: 110px;
                 right: 10px;
                 padding: 12px;
-                max-width: 180px;
+                width: 180px;
+            }
+            .made-by {
+                bottom: 50px;
+                right: 10px;
+                padding: 6px 10px;
+                width: 180px;
+            }
+            .made-by a {
+                font-size: 10px;
             }
             .legend-title {
                 font-size: 12px;
@@ -368,10 +403,19 @@
                 margin-bottom: 4px;
             }
             .map-legend {
-                bottom: 5px;
+                bottom: 100px;
                 right: 5px;
                 padding: 10px;
-                max-width: 160px;
+                width: 160px;
+            }
+            .made-by {
+                bottom: 40px;
+                right: 5px;
+                padding: 5px 8px;
+                width: 160px;
+            }
+            .made-by a {
+                font-size: 9px;
             }
             .legend-title {
                 font-size: 11px;
@@ -445,12 +489,16 @@
         </div>
         <div class='legend-item'>
             <div class='legend-dot legend-waypoint'></div>
-            <div class='legend-text'>Waypoint</div>
+            <div class='legend-text'>Stop / Parking</div>
         </div>
         <div class='legend-item'>
             <div class='legend-route'></div>
             <div class='legend-text'>Trail Route</div>
         </div>
+    </div>
+    <div class='made-by'>
+        <a href='https://www.colemanm.org' target='_blank' rel='noopener'>Made by @colemanm</a>
+        <div style='font-size: 10px; color: #9ca3af; margin-top: 4px;'>Data from <a href='https://www.facebook.com/groups/pinellastrailchallenge' target='_blank' rel='noopener' style='color: #6b7280; text-decoration: none;'>Pinellas Trail Challenge</a></div>
     </div>
     
     <script>
