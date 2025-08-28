@@ -78,6 +78,8 @@
             border-bottom: 1px solid #f3f4f6;
             cursor: pointer;
             transition: background-color 0.2s;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         .aid-station:hover {
             background-color: #f9fafb;
@@ -163,12 +165,127 @@
         .style-toggle button:not(:last-child) {
             border-right: 1px solid #e5e7eb;
         }
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1001;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .mobile-toggle svg {
+            width: 24px;
+            height: 24px;
+            color: #374151;
+        }
+        
         @media (max-width: 768px) {
             #sidebar {
-                width: 300px;
+                position: fixed;
+                left: -100%;
+                width: 100%;
+                max-width: 350px;
+                transition: left 0.3s ease-in-out;
+                z-index: 1000;
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            }
+            #sidebar.mobile-open {
+                left: 0;
             }
             #map {
-                left: 300px;
+                left: 0;
+                right: 0;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+            .style-toggle {
+                top: 60px;
+                right: 10px;
+            }
+            .style-toggle button {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+            .race-logo {
+                width: 100px;
+                margin-bottom: 10px;
+            }
+            .sidebar-title {
+                font-size: 15px;
+            }
+            .sidebar-subtitle {
+                font-size: 13px;
+                margin-bottom: 10px;
+            }
+            .download-links {
+                gap: 8px;
+            }
+            .download-link {
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+            .download-link svg {
+                width: 12px;
+                height: 12px;
+            }
+            .aid-station {
+                padding: 12px 15px;
+            }
+            .mile-marker {
+                font-size: 15px;
+            }
+            .description {
+                font-size: 13px;
+            }
+            .details {
+                font-size: 11px;
+            }
+            .badge {
+                padding: 1px 6px;
+                font-size: 9px;
+                margin-top: 3px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sidebar-header {
+                padding: 15px;
+            }
+            .race-logo {
+                width: 80px;
+                margin-bottom: 8px;
+            }
+            .sidebar-title {
+                font-size: 14px;
+            }
+            .sidebar-subtitle {
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+            .download-links {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .download-link {
+                padding: 8px 12px;
+                font-size: 12px;
+                justify-content: center;
+            }
+            .aid-station {
+                padding: 10px 12px;
+            }
+            .mile-marker {
+                font-size: 14px;
+            }
+            .description {
+                font-size: 12px;
+                margin-bottom: 4px;
             }
         }
     </style>
@@ -197,6 +314,13 @@
         <div id='aid-stations-list'></div>
     </div>
     <div id='map'></div>
+    <div class='mobile-toggle' id='mobile-toggle'>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="4" y1="6" x2="20" y2="6"/>
+            <line x1="4" y1="12" x2="20" y2="12"/>
+            <line x1="4" y1="18" x2="20" y2="18"/>
+        </svg>
+    </div>
     <div class='style-toggle'>
         <button id='outdoors-btn' class='active'>Outdoors</button>
         <button id='standard-btn'>Standard</button>
@@ -558,6 +682,33 @@
                                 'line-opacity': 0.8
                             }
                         });
+                    }
+                }
+            });
+            
+            // Mobile sidebar toggle
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            mobileToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('mobile-open');
+            });
+            
+            // Close sidebar when clicking on map on mobile
+            map.on('click', function() {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('mobile-open');
+                }
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768) {
+                    const isClickInsideSidebar = sidebar.contains(event.target);
+                    const isClickOnToggle = mobileToggle.contains(event.target);
+                    
+                    if (!isClickInsideSidebar && !isClickOnToggle) {
+                        sidebar.classList.remove('mobile-open');
                     }
                 }
             });
