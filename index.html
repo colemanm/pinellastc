@@ -455,23 +455,40 @@
     
     <script>
         async function loadEnv() {
+            // For Vercel deployment, environment variables are injected at build time
+            // Check if we're in a deployed environment with build-time env vars
+            if (typeof MAPBOX_ACCESS_TOKEN !== 'undefined') {
+                return { MAPBOX_ACCESS_TOKEN: MAPBOX_ACCESS_TOKEN };
+            }
+            
             try {
-                const response = await fetch('.env');
-                const text = await response.text();
-                const lines = text.split('\n');
-                const env = {};
-                
-                lines.forEach(line => {
-                    const [key, value] = line.split('=');
-                    if (key && value) {
-                        env[key.trim()] = value.trim();
-                    }
-                });
-                
+                const response = await fetch('/api/config');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const env = await response.json();
                 return env;
             } catch (error) {
-                console.error('Could not load .env file:', error);
-                return {};
+                console.error('Could not load environment config:', error);
+                // Fallback for local development - try to load .env file
+                try {
+                    const envResponse = await fetch('.env');
+                    const text = await envResponse.text();
+                    const lines = text.split('\n');
+                    const env = {};
+                    
+                    lines.forEach(line => {
+                        const [key, value] = line.split('=');
+                        if (key && value) {
+                            env[key.trim()] = value.trim();
+                        }
+                    });
+                    
+                    return env;
+                } catch (fallbackError) {
+                    console.error('Could not load .env file either:', fallbackError);
+                    return {};
+                }
             }
         }
         
